@@ -1,0 +1,15 @@
+# Activate with: --spring.profiles.active=redis  (or SPRING_PROFILES_ACTIVE=redis)
+# Re-enables the Redis auto-configuration that the default profile turns off.
+spring:
+  autoconfigure:
+    exclude:   # empty list -> nothing excluded -> Redis auto-config is active again
+  cache:
+    type: redis
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      # repository scanning stays off unless you actually add @RedisHash entities
+      repositories:
+        enabled: false
