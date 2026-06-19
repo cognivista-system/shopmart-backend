@@ -11,7 +11,7 @@ spring:
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/shopmart}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:2324}
+    password: ${DB_PASSWORD:1724}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -26,7 +26,7 @@ spring:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWORD:}
+#      password: ${REDIS_PASSWORD:}
   mail:
     host: ${MAIL_HOST:smtp-relay.brevo.com}
     port: ${MAIL_PORT:587}
@@ -71,8 +71,8 @@ app:
   sms:
     # Set SMS_ENABLED=true and SMS_API_URL/SMS_API_KEY to send real SMS; otherwise logged.
     enabled: ${SMS_ENABLED:false}
-    api-url: ${SMS_API_URL:}
-    api-key: ${SMS_API_KEY:}
+    api-url: ${SMS_API_URL:https://www.fast2sms.com/dev/bulkV2}
+    api-key: ${SMS_API_KEY:enZ8b5I3Wg1p6MExCuHf0UmdlriLhtB7jzPkJRs2XcY9VvNOywZd0kfjhEDqMnQGag12NL56RwY4lVFp}
     sender-id: ${SMS_SENDER_ID:SHPMRT}
   payments:
     # Active payment gateway: stub | razorpay | stripe
@@ -81,7 +81,7 @@ app:
       key-id: ${RAZORPAY_KEY_ID:rzp_test_SgtqsE7TSKJRD9}
       key-secret: ${RAZORPAY_KEY_SECRET:vZ03KvwqdZCzy5p6rm98cdNs}
     stripe:
-      secret-key: ${STRIPE_SECRET_KEY:}
+      secret-key: ${STRIPE_SECRET_KEY:vZ03KvwqdZCzy5p6rm98cdNs}
   loyalty:
     amount-per-point: ${LOYALTY_AMOUNT_PER_POINT:100}   # spend this much to earn 1 point
     point-value: ${LOYALTY_POINT_VALUE:1.0}             # currency value of 1 point on redeem
