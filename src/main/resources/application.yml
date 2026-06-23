@@ -10,8 +10,8 @@ spring:
       - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/shopmart}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:1724}
+  username: ${DB_USERNAME:postgres}
+  password: ${DB_PASSWORD:1724}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
