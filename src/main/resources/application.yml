@@ -16,24 +16,32 @@ spring:
   jpa:
     hibernate:
       ddl-auto: ${JPA_DDL_AUTO:update}
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
 
   data:
     redis:
-      host: ${REDIS_HOST:localhost}
+      host: ${REDIS_HOST:}
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:}
+
+  cache:
+    type: ${CACHE_TYPE:simple}
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 25MB
 
   mail:
     host: ${MAIL_HOST:smtp-relay.brevo.com}
     port: ${MAIL_PORT:587}
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
     properties:
       mail:
         smtp:
@@ -41,18 +49,11 @@ spring:
           starttls:
             enable: true
 
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 25MB
-
-  cache:
-    type: ${CACHE_TYPE:simple}
-
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${PORT:8080}
   servlet:
     context-path: /api
+  forward-headers-strategy: framework
 
 app:
   jwt:
@@ -61,7 +62,7 @@ app:
     refresh-token-expiration-ms: ${JWT_REFRESH_EXP:604800000}
 
   cors:
-    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+    allowed-origins: ${CORS_ORIGINS:*}
 
   google:
     client-id: ${GOOGLE_CLIENT_ID:}
@@ -113,10 +114,19 @@ app:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
-
   api-docs:
     path: /v3/api-docs
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
 logging:
   level:
+    root: INFO
     com.shopmart: ${LOG_LEVEL:INFO}
