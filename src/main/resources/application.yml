@@ -1,18 +1,18 @@
 spring:
   application:
     name: shopmart-backend
-  # Redis is OFF by default (nothing in the app uses it yet) — this also silences the
-  # "Could not safely identify store assignment" warnings. To enable Redis, run with
-  # the 'redis' profile:  --spring.profiles.active=redis
+
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
       - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/shopmart}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:2324}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: ${JPA_DDL_AUTO:update}
@@ -22,26 +22,30 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     show-sql: ${JPA_SHOW_SQL:false}
+
   data:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:}
+
   mail:
     host: ${MAIL_HOST:smtp-relay.brevo.com}
     port: ${MAIL_PORT:587}
-    username: ${MAIL_USERNAME:cognivistaai@gmail.com}
-    password: ${MAIL_PASSWORD:aias bpcp bern kawv}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 25MB
+
   cache:
     type: ${CACHE_TYPE:simple}
 
@@ -52,56 +56,64 @@ server:
 
 app:
   jwt:
-    # Base64 secret; replace in production. Min 256 bits for HS256.
-    secret: ${JWT_SECRET:bXktc3VwZXItc2VjcmV0LWtleS1mb3Itc2hvcG1hcnQtY2hhbmdlLW1lLWluLXByb2Q=}
-    access-token-expiration-ms: ${JWT_ACCESS_EXP:900000}        # 15 minutes
-    refresh-token-expiration-ms: ${JWT_REFRESH_EXP:604800000}   # 7 days
+    secret: ${JWT_SECRET}
+    access-token-expiration-ms: ${JWT_ACCESS_EXP:900000}
+    refresh-token-expiration-ms: ${JWT_REFRESH_EXP:604800000}
+
   cors:
     allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+
   google:
-    # OAuth 2.0 Web client ID from Google Cloud Console. Required for /auth/google.
     client-id: ${GOOGLE_CLIENT_ID:}
+
   otp:
     expiration-minutes: 10
     length: 6
+
   mail:
-    # Set MAIL_ENABLED=true (and spring.mail.* credentials) to send real emails; otherwise logged.
     enabled: ${MAIL_ENABLED:false}
     from: ${MAIL_FROM:no-reply@shopmart.local}
+
   sms:
-    # Set SMS_ENABLED=true and SMS_API_URL/SMS_API_KEY to send real SMS; otherwise logged.
     enabled: ${SMS_ENABLED:false}
-    api-url: ${SMS_API_URL:}
+    api-url: ${SMS_API_URL:https://www.fast2sms.com/dev/bulkV2}
     api-key: ${SMS_API_KEY:}
     sender-id: ${SMS_SENDER_ID:SHPMRT}
+
   payments:
-    # Active payment gateway: stub | razorpay | stripe
     provider: ${PAYMENT_PROVIDER:stub}
+
     razorpay:
-      key-id: ${RAZORPAY_KEY_ID:rzp_test_SgtqsE7TSKJRD9}
-      key-secret: ${RAZORPAY_KEY_SECRET:vZ03KvwqdZCzy5p6rm98cdNs}
+      key-id: ${RAZORPAY_KEY_ID:}
+      key-secret: ${RAZORPAY_KEY_SECRET:}
+
     stripe:
       secret-key: ${STRIPE_SECRET_KEY:}
+
   loyalty:
-    amount-per-point: ${LOYALTY_AMOUNT_PER_POINT:100}   # spend this much to earn 1 point
-    point-value: ${LOYALTY_POINT_VALUE:1.0}             # currency value of 1 point on redeem
+    amount-per-point: ${LOYALTY_AMOUNT_PER_POINT:100}
+    point-value: ${LOYALTY_POINT_VALUE:1.0}
+
   search:
-    provider: ${SEARCH_PROVIDER:lexical}                # lexical | elasticsearch
+    provider: ${SEARCH_PROVIDER:lexical}
     elasticsearch:
       url: ${ELASTICSEARCH_URL:http://localhost:9200}
+
   currency:
     base: ${CURRENCY_BASE:INR}
-    # Comma-separated CODE:rate pairs relative to base (base rate = 1). Override per deployment.
     rates: ${CURRENCY_RATES:INR:1,USD:0.012,EUR:0.011,GBP:0.0095,AED:0.044}
+
   i18n:
     default-locale: ${DEFAULT_LOCALE:en}
     supported: ${SUPPORTED_LOCALES:en,hi,gu,fr,es}
+
   seo:
     base-url: ${SEO_BASE_URL:https://shopmart.local}
 
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
   api-docs:
     path: /v3/api-docs
 

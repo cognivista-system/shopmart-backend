@@ -24,6 +24,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>,
     // ---- vendor (Phase 3) ----
     Page<Product> findByVendorId(Long vendorId, Pageable pageable);
     long countByVendorId(Long vendorId);
+
+    long countByStatus(ProductStatus status);
     Page<Product> findByStatus(ProductStatus status, Pageable pageable);
     long countByVendorIdAndStatus(Long vendorId, ProductStatus status);
 

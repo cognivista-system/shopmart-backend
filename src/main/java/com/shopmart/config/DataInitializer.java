@@ -28,8 +28,19 @@ public class DataInitializer implements CommandLineRunner {
     @Value("${app.admin.password:Admin@12345}")
     private String adminPassword;
 
+    @Value("${app.superadmin.email:superadmin@shopmart.local}")
+    private String superAdminEmail;
+
+    @Value("${app.superadmin.password:Super@12345}")
+    private String superAdminPassword;
+
     @Override
     public void run(String... args) {
+        seedAdmin();
+        seedSuperAdmin();
+    }
+
+    private void seedAdmin() {
         if (userRepository.existsByEmail(adminEmail)) {
             return;
         }
@@ -43,5 +54,22 @@ public class DataInitializer implements CommandLineRunner {
         admin.addRole(Role.ROLE_CUSTOMER);
         userRepository.save(admin);
         log.info("Seeded default admin account: {}", adminEmail);
+    }
+
+    private void seedSuperAdmin() {
+        if (userRepository.existsByEmail(superAdminEmail)) {
+            return;
+        }
+        User su = new User();
+        su.setName("Super Admin");
+        su.setEmail(superAdminEmail);
+        su.setPasswordHash(passwordEncoder.encode(superAdminPassword));
+        su.setEmailVerified(true);
+        su.setEnabled(true);
+        su.addRole(Role.ROLE_SUPER_ADMIN);
+        su.addRole(Role.ROLE_ADMIN);
+        su.addRole(Role.ROLE_CUSTOMER);
+        userRepository.save(su);
+        log.info("Seeded default super admin account: {}", superAdminEmail);
     }
 }
